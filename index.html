@@ -2,22 +2,10 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Антон Васильченко — Product Manager чат-ботов (Сбер)</title>
+  <title>Антон Васильченко — Product Manager (чат-боты и голосовые роботы)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg-gradient: radial-gradient(circle at top left, #1cff9b22, #000814 55%, #020617);
-      --accent: #19c37d;
-      --accent-soft: #19c37d33;
-      --accent-strong: #1cff9b;
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --card-bg: #020617cc;
-      --border-soft: #1f293399;
-      --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.65);
-      --radius-xl: 28px;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,627 +13,680 @@
     }
 
     body {
+      font-family: "Inter", sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+      color: #e5e7eb;
       min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      padding: 32px 16px;
+      overflow-x: hidden;
+    }
+
+    .bg-orbit {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(34,197,94,0.35), transparent 55%),
+        radial-gradient(circle at 90% 20%, rgba(52,211,153,0.20), transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(56,189,248,0.18), transparent 60%);
+      opacity: 0.18;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      animation: orbitMove 26s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    @keyframes orbitMove {
+      0% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(-20px,10px,0) scale(1.05); }
+      100% { transform: translate3d(20px,-10px,0) scale(1.03); }
     }
 
     .page {
-      width: 100%;
-      max-width: 1120px;
-      border-radius: 32px;
-      padding: 28px 28px 32px;
-      background: linear-gradient(145deg, #020617dd, #020617f5);
-      border: 1px solid #1f2933;
-      box-shadow: var(--shadow-soft);
-      position: relative;
-      overflow: hidden;
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 24px 18px 80px;
     }
 
-    .page::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background:
-        radial-gradient(circle at 10% 0%, #22c55e22 0, transparent 55%),
-        radial-gradient(circle at 90% 100%, #22d3ee24 0, transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .page-inner {
-      position: relative;
-      z-index: 1;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text-muted);
-      padding: 4px 10px 4px 4px;
-      border-radius: 999px;
-      background: #020617cc;
-      border: 1px solid #1f293399;
-      margin-bottom: 16px;
-      backdrop-filter: blur(12px);
-    }
-
-    .badge-dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffffff, #22c55e);
-      box-shadow: 0 0 18px #22c55eaa;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.2fr);
-      gap: 32px;
-      align-items: stretch;
-    }
-
-    @media (max-width: 880px) {
-      .layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .page {
-        padding: 20px 18px 26px;
-        border-radius: 24px;
-      }
-    }
-
-    .hero-title {
-      font-size: clamp(26px, 3vw, 32px);
-      line-height: 1.2;
+    h1 {
+      font-size: 38px;
+      font-weight: 700;
       margin-bottom: 10px;
+      letter-spacing: 0.02em;
     }
 
-    .hero-title span {
-      color: var(--accent-strong);
+    h2 {
+      font-size: 26px;
+      margin: 40px 0 16px;
+      letter-spacing: 0.02em;
     }
 
-    .hero-sub {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 520px;
-      line-height: 1.5;
-      margin-bottom: 18px;
+    h3 {
+      font-size: 20px;
+      margin: 18px 0 8px;
     }
 
-    .metrics-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 18px;
-    }
-
-    .chip {
-      padding: 6px 11px;
-      border-radius: 999px;
-      border: 1px solid #1f2933;
-      background: #020617dd;
-      font-size: 12px;
-      color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .chip strong {
-      color: var(--accent-strong);
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .hero-contact {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .btn-primary,
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 9px 16px;
-      font-size: 13px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      border: 1px solid transparent;
-      transition: all 0.18s ease-out;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      color: #020617;
-      font-weight: 600;
-      box-shadow: 0 0 0 1px #22c55e66, 0 18px 35px rgba(34, 197, 94, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 0 1px #22c55eaa, 0 22px 42px rgba(34, 197, 94, 0.6);
-      filter: brightness(1.03);
-    }
-
-    .btn-ghost {
-      background: #020617dd;
-      color: var(--text-muted);
-      border-color: #1f2933;
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--accent-strong);
-      background: #020617f0;
-    }
-
-    .section {
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      background: var(--card-bg);
-      padding: 16px 16px 18px;
-      margin-bottom: 14px;
-      backdrop-filter: blur(16px);
-    }
-
-    .section h2 {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: #9ca3af;
+    p {
+      font-size: 17px;
+      line-height: 1.6;
       margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      color: #d1d5db;
     }
 
-    .section h2::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffffff, var(--accent));
-      box-shadow: 0 0 14px #22c55eaa;
-    }
-
-    .section p {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .grid-two {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 10px;
+    ul {
+      list-style: none;
       margin-top: 6px;
     }
 
-    @media (max-width: 880px) {
-      .grid-two {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    li {
+      font-size: 16px;
+      line-height: 1.55;
+      margin-bottom: 6px;
+      position: relative;
+      padding-left: 18px;
     }
 
-    .cell-label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #6b7280;
-      margin-bottom: 4px;
-    }
-
-    .cell-text {
-      font-size: 13px;
-      color: #e5e7eb;
-      line-height: 1.5;
-    }
-
-    .cell-text strong {
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-
-    .list {
-      list-style: none;
-      font-size: 13px;
-      color: var(--text-muted);
-      display: grid;
-      gap: 4px;
-      margin-top: 4px;
-    }
-
-    .list li::before {
+    li::before {
       content: "•";
-      color: var(--accent-strong);
-      margin-right: 6px;
+      position: absolute;
+      left: 4px;
+      top: 0;
+      color: #22c55e;
     }
 
-    .skills-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 4px;
+    .sub {
+      color: #9ca3af;
+      font-size: 17px;
+      margin-bottom: 18px;
     }
 
-    .skills-chips span {
-      font-size: 12px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid #1f2933;
-      background: #020617dd;
-      color: #d1d5db;
-      white-space: nowrap;
-    }
-
-    /* Правый столбец */
-
-    .sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .photo-card {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .photo-frame {
-      width: 140px;
-      height: 180px;
-      border-radius: 24px;
+    .hero-card {
+      position: relative;
+      border-radius: 22px;
+      padding: 22px 20px 20px;
+      margin-top: 12px;
+      background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.20), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.18), transparent 60%),
+        rgba(15,23,42,0.92);
+      border: 1px solid rgba(148,163,184,0.45);
+      box-shadow: 0 26px 70px rgba(15,23,42,0.95);
       overflow: hidden;
-      border: 1px solid #22c55e44;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-      background: #020617;
-      animation: float 6s ease-in-out infinite alternate;
     }
 
-    .photo-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 26px;
+      background: conic-gradient(from 160deg,
+        rgba(34,197,94,0.0),
+        rgba(45,212,191,0.55),
+        rgba(56,189,248,0.60),
+        rgba(190,242,100,0.5),
+        rgba(34,197,94,0.0)
+      );
+      opacity: 0;
+      z-index: -1;
+      filter: blur(22px);
+      transition: opacity 0.7s ease-out;
     }
 
-    @keyframes float {
-      0% {
-        transform: translateY(0);
-      }
-      100% {
-        transform: translateY(-6px);
-      }
+    .hero-card:hover::before {
+      opacity: 1;
     }
 
-    .photo-info {
+    .hero-row {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .hero-main {
       flex: 1;
     }
 
-    .photo-info h1 {
-      font-size: 18px;
-      margin-bottom: 4px;
+    .hero-photo {
+      width: 150px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .photo-info p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.4;
+    .hero-photo-inner {
+      position: relative;
+      width: 132px;
+      height: 132px;
+      border-radius: 999px;
+      padding: 3px;
+      background: conic-gradient(
+        from 190deg,
+        rgba(34,197,94,0.1),
+        rgba(56,189,248,0.7),
+        rgba(52,211,153,0.9),
+        rgba(190,242,100,0.7),
+        rgba(34,197,94,0.1)
+      );
+      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+      /* УБРАЛ ВРАЩЕНИЕ */
     }
 
-    .requirements-table {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
-      gap: 10px;
-      margin-top: 6px;
-      font-size: 13px;
+    .hero-photo-frame {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: radial-gradient(circle at top, #020617, #020617 60%, #000);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    @media (max-width: 880px) {
-      .requirements-table {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.05);
     }
 
-    .req-col-title {
-      font-size: 12px;
+    .hero-photo-placeholder {
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.14em;
+      text-align: center;
       color: #6b7280;
-      margin-bottom: 4px;
+      padding: 0 10px;
     }
 
-    .req-item {
-      margin-bottom: 6px;
-      color: var(--text-muted);
-    }
-
-    .req-item strong {
-      color: var(--accent-strong);
-      font-weight: 600;
-    }
-
-    .footer-note {
-      text-align: right;
+    .role-label {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
       font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #bbf7d0;
+      border: 1px solid rgba(34,197,94,0.6);
+      background: radial-gradient(circle at top, rgba(21,128,61,0.9), rgba(6,78,59,0.96));
+      margin-bottom: 10px;
+    }
+
+    .hero-line {
+      font-size: 18px;
+      line-height: 1.56;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      color: #e5e7eb;
+      background: rgba(15,23,42,0.95);
+    }
+
+    .block {
+      background: rgba(15,23,42,0.98);
+      border-radius: 18px;
+      border: 1px solid rgba(31,41,55,0.95);
+      padding: 18px 18px 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+    }
+
+    .block-header {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .highlight {
+      color: #bbf7d0;
+      font-weight: 500;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
       margin-top: 8px;
     }
 
-    @media (max-width: 880px) {
-      .footer-note {
-        text-align: left;
-      }
+    .metric {
+      background:
+        radial-gradient(circle at top, rgba(34,197,94,0.16), transparent 60%),
+        rgba(15,23,42,0.96);
+      border-radius: 16px;
+      padding: 16px 15px 14px;
+      border: 1px solid rgba(55,65,81,0.9);
+      position: relative;
+      overflow: hidden;
+      transform-origin: center;
+      transition: transform 0.25s ease-out, box-shadow 0.25s ease-out, border-color 0.25s;
     }
 
+    .metric::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.28), transparent 55%);
+      opacity: 0;
+      transition: opacity 0.25s ease-out;
+    }
+
+    .metric:hover {
+      transform: translateY(-2px) scale(1.015);
+      box-shadow: 0 16px 30px rgba(15,23,42,0.9);
+      border-color: rgba(34,197,94,0.9);
+    }
+
+    .metric:hover::after {
+      opacity: 1;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    .metric-note {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    /* НОВАЯ ТАБЛИЦА ТРЕБОВАНИЙ */
+    .req-table {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid rgba(31,41,55,0.95);
+      background: rgba(15,23,42,0.98);
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
+    }
+
+    .req-header-row {
+      display: grid;
+      grid-template-columns: 1.05fr 1.3fr;
+      background: radial-gradient(circle at top, rgba(34,197,94,0.16), rgba(15,23,42,0.98));
+      border-bottom: 1px solid rgba(31,41,55,0.95);
+    }
+
+    .req-header-cell {
+      padding: 12px 16px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #9ca3af;
+    }
+
+    .req-row {
+      display: grid;
+      grid-template-columns: 1.05fr 1.3fr;
+      border-bottom: 1px solid rgba(31,41,55,0.85);
+    }
+
+    .req-row:last-child {
+      border-bottom: none;
+    }
+
+    .req-cell {
+      padding: 12px 16px;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .req-cell.left {
+      color: #9ca3af;
+      background: rgba(15,23,42,0.98);
+    }
+
+    .req-cell.right {
+      color: #e5e7eb;
+      background:
+        radial-gradient(circle at left, rgba(34,197,94,0.10), transparent 55%),
+        rgba(15,23,42,0.98);
+      border-left: 1px solid rgba(31,41,55,0.9);
+    }
+
+    .contact {
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    a {
+      color: #4ade80;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .fade-section {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    }
+
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.10s; }
+    .delay-2 { transition-delay: 0.18s; }
+    .delay-3 { transition-delay: 0.26s; }
+
+    @media (max-width: 780px) {
+      .page {
+        padding: 18px 12px 60px;
+      }
+      h1 { font-size: 30px; }
+      h2 { font-size: 22px; }
+      .hero-row {
+        flex-direction: column-reverse;
+      }
+      .hero-photo {
+        align-self: center;
+        margin-bottom: 10px;
+      }
+      .req-header-row,
+      .req-row {
+        grid-template-columns: 1fr;
+      }
+      .req-cell.right {
+        border-left: none;
+        border-top: 1px solid rgba(31,41,55,0.9);
+      }
+    }
   </style>
 </head>
+
 <body>
-  <main class="page">
-    <div class="page-inner">
-      <div class="badge">
-        <div class="badge-dot"></div>
-        Product Manager (чат-боты и голосовые роботы) · Сбер
-      </div>
+  <div class="bg-orbit"></div>
 
-      <div class="layout">
-        <!-- ЛЕВАЯ ЧАСТЬ -->
-        <section>
-          <h1 class="hero-title">
-            Антон Васильченко — <span>Candidate Journey</span> для роли PM
-            чат-ботов в Сбере
-          </h1>
-          <p class="hero-sub">
-            7 лет развивал собственный digital-продукт «Фотостудия №1»:
-            построил воронку с нуля, автоматизировал процессы, внедрил AI-инструменты и
-            довёл бизнес до лидера рынка в Москве. Хочу применить этот опыт для роста
-            канала чат-ботов и голосовых роботов Сбера.
+  <div class="page">
+
+    <!-- HERO -->
+    <section class="hero-card fade-section">
+      <div class="hero-row">
+        <div class="hero-main">
+          <div class="role-label">Кандидат на роль Product Manager — чат-боты и голосовые роботы</div>
+          <h1>Антон Васильченко</h1>
+          <p class="sub">
+            7 лет развивал собственный цифровой продукт с нуля до лидера рынка: отвечал за воронку продаж,
+            клиентский сервис, метрики и внедрение AI в реальные процессы. Хочу применить этот опыт в Сбере —
+            в канале чат-ботов и голосовых роботов.
           </p>
-
-          <div class="metrics-row">
-            <div class="chip">
-              <strong>10 млн ₽</strong>
-              <span>годовой оборот сервиса</span>
-            </div>
-            <div class="chip">
-              <strong>3%</strong>
-              <span>конверсия сайта в бронь</span>
-            </div>
-            <div class="chip">
-              <strong>1500 ₽ → 12 000 ₽</strong>
-              <span>CAC и средний чек</span>
-            </div>
+          <p class="hero-line">
+            Я привык отвечать не за «процесс», а за <span class="highlight">конверсию, выручку и качество клиентского опыта</span>,
+            опираясь на данные и нейросети.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Product / Growth</span>
+            <span class="chip">AI / LLM промты</span>
+            <span class="chip">Воронки и конверсии</span>
+            <span class="chip">Автоматизация сервиса</span>
           </div>
+        </div>
 
-          <div class="hero-contact">
-            <a href="https://t.me/simpspings" class="btn-primary" target="_blank">
-              Написать в Telegram
-            </a>
-            <a href="mailto:vasilchenk0anton@gmail.com" class="btn-ghost">
-              Написать на почту
-            </a>
-          </div>
-
-          <!-- Блок: Опыт и задачи -->
-          <div class="section">
-            <h2>Опыт продуктовой работы</h2>
-            <p>
-              Последние 7 лет я был владельцем продукта в собственной компании
-              «ООО Фотостудия №1». Отвечал за весь цикл: от гипотез и прототипов
-              до юнит-экономики и автоматизации процессов.
-            </p>
-
-            <div class="grid-two">
-              <div>
-                <div class="cell-label">Что делал</div>
-                <ul class="list">
-                  <li>строил и улучшал воронку продаж (сайт → бронь → визит → повторная покупка);</li>
-                  <li>проводил A/B-тесты лендингов, офферов и промо-механик;</li>
-                  <li>аналитика: конверсия, CAC, LTV, ROMI, повторные покупки;</li>
-                  <li>внедрял CRM, скрипты и автоворонки коммуникаций;</li>
-                  <li>управлял командой (до 8 человек: разработка, маркетинг, продакшн).</li>
-                </ul>
-              </div>
-              <div>
-                <div class="cell-label">Как это связано с задачами Сбера</div>
-                <p class="cell-text">
-                  Продуктовый подход к каналу: воспринимаю чат-бота и голосового
-                  робота как отдельный продукт с метриками, гипотезами и roadmap.
-                  Привык постоянно искать точки роста в воронке и подтверждать
-                  решения данными.
-                </p>
-              </div>
+        <!-- Блок фото -->
+        <div class="hero-photo">
+          <div class="hero-photo-inner">
+            <div class="hero-photo-frame">
+              <!-- ЗАМЕНИ src НА СВОЁ ФОТО -->
+              <img src="photo.jpg" alt="Фото Антона Васильченко"
+                   onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'hero-photo-placeholder\'>Добавьте сюда своё фото</div>';">
             </div>
           </div>
-
-          <!-- Блок: AI и LLM -->
-          <div class="section">
-            <h2>Работа с AI и LLM</h2>
-            <p>
-              Я глубоко погружён в нейросети и активно использую их не только как
-              пользователь, но и как инструмент улучшения бизнес-процессов.
-            </p>
-            <div class="grid-two">
-              <div>
-                <div class="cell-label">С чем работал</div>
-                <div class="skills-chips">
-                  <span>ChatGPT</span>
-                  <span>Claude</span>
-                  <span>Gemini</span>
-                  <span>Midjourney</span>
-                  <span>Flux</span>
-                  <span>nano-banana</span>
-                  <span>Ollama</span>
-                  <span>Retouch4me</span>
-                </div>
-              </div>
-              <div>
-                <div class="cell-label">Как применял</div>
-                <ul class="list">
-                  <li>создавал промты для генерации сценариев, текстов, скриптов;</li>
-                  <li>через Ollama и Text-Generation-WebUI тестировал локальные LLM;</li>
-                  <li>Retouch4me встроил в продакшн как AI-модуль обработки фото (экономия времени команды);</li>
-                  <li>использовал AI для ресёрча, сегментации запросов и генерации гипотез.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Блок: Тех профиль -->
-          <div class="section">
-            <h2>Технический профиль</h2>
-            <div class="grid-two">
-              <div>
-                <div class="cell-label">Web и данные</div>
-                <ul class="list">
-                  <li>HTML/CSS, базовый JavaScript;</li>
-                  <li>WordPress, Bitrix, понимание API и веб-архитектуры;</li>
-                  <li>SEO: структура сайта, метаданные, индексация;</li>
-                  <li>Web-аналитика: Яндекс.Метрика, GA, сквозная аналитика;</li>
-                  <li><strong>Базовый SQL</strong> — выборки, фильтрация, агрегаты для анализа продуктовых метрик.</li>
-                </ul>
-              </div>
-              <div>
-                <div class="cell-label">Управление и процессы</div>
-                <ul class="list">
-                  <li>планирование спринтов, декомпозиция задач;</li>
-                  <li>приглашение экспертов для оценки сроков и рисков;</li>
-                  <li>работа с подрядчиками (разработчики, маркетинг, продакшн);</li>
-                  <li>управление через цели и метрики, а не только через задачи.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ПРАВАЯ ЧАСТЬ -->
-        <aside class="sidebar">
-          <div class="section">
-            <div class="photo-card">
-              <div class="photo-frame">
-                <!-- ЗАГРУЗИ фото в репозиторий под именем photo.jpg -->
-                <img src="photo.jpg" alt="Антон Васильченко" />
-              </div>
-              <div class="photo-info">
-                <h1>Антон Васильченко</h1>
-                <p>
-                  Product Manager / владелец продукта. Москва, открыто к офферу
-                  на роль PM чат-ботов и голосовых роботов в Сбере.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Матч с требованиями вакансии</h2>
-            <div class="requirements-table">
-              <div>
-                <div class="req-col-title">Запрос Сбера</div>
-
-                <div class="req-item">
-                  <strong>5+ лет владельцем продукта</strong><br />
-                  Опыт в каналах продаж / клиентском сервисе.
-                </div>
-
-                <div class="req-item">
-                  <strong>Работа с данными и дашбордами</strong><br />
-                  Понимание SQL, BI-систем как плюс.
-                </div>
-
-                <div class="req-item">
-                  <strong>Практический опыт с LLM</strong><br />
-                  Умение составлять и улучшать промты.
-                </div>
-
-                <div class="req-item">
-                  <strong>Полный цикл разработки продукта</strong><br />
-                  Agile / Scrum, продуктовый подход.
-                </div>
-
-                <div class="req-item">
-                  <strong>Фокус на воронке продаж и конверсии</strong><br />
-                  Понимание метрик контакт-центра.
-                </div>
-              </div>
-
-              <div>
-                <div class="req-col-title">Мой опыт</div>
-
-                <div class="req-item">
-                  <strong>7 лет владельцем продукта</strong><br />
-                  «Фотостудия №1»: B2C-сервис с полной цифровой воронкой
-                  (сайт → бронь → визит → повтор).
-                </div>
-
-                <div class="req-item">
-                  <strong>Данные и аналитика</strong><br />
-                  Метрика, GA, CRM-отчёты, базовый SQL для анализа когорт,
-                  конверсий, ROI.
-                </div>
-
-                <div class="req-item">
-                  <strong>Глубокий опыт с AI/LLM</strong><br />
-                  ChatGPT, Claude, Gemini, Flux, nano-banana, Ollama, Retouch4me;
-                  промт-инжиниринг под разные бизнес-задачи.
-                </div>
-
-                <div class="req-item">
-                  <strong>Полный цикл</strong><br />
-                  От гипотез и MVP до стабильной юнит-экономики и автоматизации
-                  процессов.
-                </div>
-
-                <div class="req-item">
-                  <strong>Воронка и конверсия</strong><br />
-                  Вывод сайта на 3% конверсии, управление CAC/LTV, системная
-                  работа с повторными покупками.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section">
-            <h2>Как могу быть полезен каналу чат-ботов</h2>
-            <ul class="list">
-              <li>Системно искать и улучшать точки роста в воронке бота (от входа до целевого действия).</li>
-              <li>Запускать и анализировать A/B-тесты промтов, сценариев и логики диалогов.</li>
-              <li>Связывать продуктовые метрики канала с бизнес-результатами (продажи, retention, NPS).</li>
-              <li>Объединять экспертизу AI, данных и продуктового мышления в одной роли.</li>
-            </ul>
-          </div>
-
-          <div class="section">
-            <h2>Контакты</h2>
-            <p>
-              Telegram: <a href="https://t.me/simpspings" style="color: var(--accent-strong); text-decoration: none;" target="_blank">@simpspings</a><br />
-              Телефон: <span style="color: var(--text-muted);">+7 915 200-91-92</span><br />
-              Email: <span style="color: var(--text-muted);">vasilchenk0anton@gmail.com</span>
-            </p>
-          </div>
-
-          <div class="footer-note">
-            Страница подготовлена специально под вакансию Product Manager
-            (чат-боты и голосовые роботы) в Сбере.
-          </div>
-        </aside>
+        </div>
       </div>
-    </div>
-  </main>
+    </section>
+
+    <!-- КОРОТКО ОБО МНЕ + ЦИФРЫ -->
+    <section class="fade-section delay-1">
+      <h2>Кто я и за какие цифры отвечал</h2>
+      <div class="block">
+        <div class="block-header">Кратко обо мне</div>
+        <p>
+          Основатель и продукт собственного сервиса <span class="highlight">«Фотостудия №1»</span> (Москва). 
+          С нуля придумал формат продукта «фотосессия всё включено», запустил канал онлайн-продаж, выстроил
+          воронку и систему сервиса, внедрил AI-инструменты. Управлял командой и всей цифровой частью бизнеса.
+        </p>
+        <p>
+          По сути 7 лет я выполнял функции Product Manager / Product Owner для своего сервиса: формировал
+          продуктовую гипотезу, развивал её, работал с метриками, улучшал конверсии и автоматизировал операции.
+        </p>
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="metric-value">10+ млн ₽</div>
+            <div class="metric-label">Годовой оборот сервиса</div>
+            <div class="metric-note">Вывел продукт с нуля до устойчивого оборота</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">3%</div>
+            <div class="metric-label">Конверсия сайта в заявку</div>
+            <div class="metric-note">Через A/B-тесты, UX и работу с воронкой</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">1500 ₽ → 12 000 ₽</div>
+            <div class="metric-label">CAC и средний чек</div>
+            <div class="metric-note">Управление экономикой канала и продуктовым пакетом</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">200+ заказов/мес</div>
+            <div class="metric-label">Нагрузка продукта</div>
+            <div class="metric-note">Стабильная операционная модель и сервис</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ПОЧЕМУ ПОДХОЖУ -->
+    <section class="fade-section delay-2">
+      <h2>Почему мой опыт ложится на роль PM (чат-боты и голосовые роботы)</h2>
+      <div class="block">
+        <ul>
+          <li>7 лет отвечал за <span class="highlight">канал продаж и клиентский сервис</span> в своём продукте: заявки, обработка, запись, повторные обращения.</li>
+          <li>Привык мыслить через <span class="highlight">воронку и метрики</span>: где теряем клиента, что мешает двигаться дальше, какие гипотезы проверять.</li>
+          <li>Работаю с AI и LLM: использую нейросети для реальной автоматизации, а не «для галочки».</li>
+          <li>Люблю сценарии, тексты и логику диалогов — чат-боты и голосовые роботы как канал мне реально интересны.</li>
+          <li>Комфортно чувствую себя в роли человека, который <span class="highlight">ставит задачу команде, анализирует данные и отвечает за результат</span>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ТРЕБОВАНИЯ СБЕРА → МОЯ КОМПЕТЕНЦИЯ (ТАБЛИЦА) -->
+    <section class="fade-section delay-3">
+      <h2>Требования Сбера → моя компетенция</h2>
+
+      <div class="req-table">
+        <div class="req-header-row">
+          <div class="req-header-cell">Требование</div>
+          <div class="req-header-cell">Моя компетенция</div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            5+ лет опыта владельцем продукта, работа с каналами продаж или клиентским сервисом.
+          </div>
+          <div class="req-cell right">
+            7 лет был владельцем цифрового продукта <span class="highlight">«Фотостудия №1»</span>. Отвечал за весь путь клиента:
+            трафик, заявка, продажа, сервис, повторные обращения. По факту выполнял роль product owner’а для канала продаж и сервиса.
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Умение работать с воронкой продаж, ключевыми метриками, улучшать конверсию.
+          </div>
+          <div class="req-cell right">
+            Выстроил воронку с нуля и довёл конверсию сайта до <span class="highlight">3%</span>. Работал с этапами:
+            показ → клик → просмотр → заявка → запись → визит → повторное обращение. На каждом шаге искал и убирал «узкие места».
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Опыт A/B тестирования, анализа данных и поиска точек роста.
+          </div>
+          <div class="req-cell right">
+            Регулярно проводил A/B тесты: тексты, формы заявки, предложения, шаги воронки, UX сайта. 
+            Сравнивал конверсию, глубину просмотра, отказы и брал в основу только то, что давало измеримый прирост.
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Навыки работы с аналитикой (SQL, BI-системы как плюс).
+          </div>
+          <div class="req-cell right">
+            Работал с Google Analytics, Яндекс.Метрикой, тепловыми картами, SEO-отчётами. 
+            Умею строить причинно-следственные выводы по данным и готов прокачать SQL/BI под задачи команды.
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Практический опыт работы с LLM (ГигаЧат, ChatGPT, Claude, Gemini и др.), умение составлять и улучшать промты.
+          </div>
+          <div class="req-cell right">
+            Глубоко работаю с LLM: ChatGPT, Claude, Gemini, Flux, nano-banana, Ollama, Text-Generation-WebUI. 
+            Настраиваю промты под бизнес-результат: структура ответа, стиль, ограничения, проверка корректности. 
+            Понимаю, как сценарий промта влияет на диалог и результат.
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Понимание полного цикла разработки продукта (от идеи до запуска и поддержки), Agile/Scrum.
+          </div>
+          <div class="req-cell right">
+            Вел продукт по циклу: идея → гипотеза → реализация → релиз → измерение → следующая версия. 
+            Привык разбивать задачи на итерации, приоритезировать и возвращаться к фичам по результатам метрик.
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Понимание принципов работы контакт-центра и его ключевых метрик.
+          </div>
+          <div class="req-cell right">
+            В моем продукте фактически был мини-контакт-центр: заявки с сайта, звонки, сообщения. 
+            Контролировал скорость ответа, причину потери лида, процент доведения до записи, качество обработки.
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Построение воронки продаж, работа с приоритетами и конверсией.
+          </div>
+          <div class="req-cell right">
+            Сам строил и улучшал воронку: от первого касания до повторной покупки. 
+            Фокусировался на тех шагах, где прирост конверсии сильнее всего влиял на выручку и окупаемость.
+          </div>
+        </div>
+
+        <div class="req-row">
+          <div class="req-cell left">
+            Сильные аналитические навыки и принятие решений на основе данных.
+          </div>
+          <div class="req-cell right">
+            Принимал решения по CR, CAC, LTV, ROI, загрузке команды, стоимости каналов. 
+            Привык спорить не мнениями, а цифрами и проверенными гипотезами.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI / LLM -->
+    <section class="fade-section delay-1">
+      <h2>AI, LLM и промты: чем я реально занимался</h2>
+      <div class="block">
+        <div class="block-header">Нейросети в реальных задачах</div>
+        <p>
+          Я глубоко погружён в тему AI и генеративных моделей и использую их не как «игрушку», а как инструмент 
+          для денег и эффективности.
+        </p>
+        <h3>С какими инструментами работаю</h3>
+        <div class="metric-grid" style="margin-top:10px;">
+          <div class="metric">
+            <div class="metric-label">Текст / LLM</div>
+            <div class="metric-note">ChatGPT, Claude, Gemini, nano-banana, Flux, Ollama, Text-Generation-WebUI</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Графика / видео / аудио</div>
+            <div class="metric-note">Midjourney, Stable Diffusion, Suno и др. для креатива и контента</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Обработка фото</div>
+            <div class="metric-note">Внедрил Retouch4me в продакшн фотостудии вместо ручной ретуши части задач</div>
+          </div>
+        </div>
+        <h3 style="margin-top:16px;">Какие задачи решал</h3>
+        <ul>
+          <li>Генерация и доработка текстов: скрипты, шаблоны переписок, инструкции, промо-материалы.</li>
+          <li>Построение промтов под бизнес-результат: структура, стиль, ограничение ответов, проверка корректности.</li>
+          <li>Эксперименты с локальными моделями через Ollama и Text-Generation-WebUI для сценариев без передачи данных наружу.</li>
+          <li>Автоматизация части рутины — от контента до обработки изображений — ради ускорения цикла и снижения затрат.</li>
+        </ul>
+        <p class="note">
+          В роли PM чат-ботов и голосовых роботов я хочу применить этот опыт для настройки промтов, сценариев,
+          автоподсказок и логики диалогов, которые будут реально продавать продукты Сбера и решать задачи клиентов.
+        </p>
+      </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section class="fade-section delay-2">
+      <h2>Контакты для связи</h2>
+      <p class="contact">
+        Telegram: <a href="https://t.me/simpspings" target="_blank">@simpspings</a><br />
+        Телефон: <a href="tel:+79152009192">+7&nbsp;915&nbsp;200-91-92</a><br />
+        Город: Москва (готов к офису / гибриду)
+      </p>
+      <p class="note">
+        По запросу могу подробно рассказать, как именно строил воронку, какие A/B-тесты проводил и как использовал AI
+        в продукте «Фотостудия №1».
+      </p>
+    </section>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+
+    document.querySelectorAll(".fade-section").forEach((el) => observer.observe(el));
+  </script>
 </body>
 </html>
